@@ -106,17 +106,22 @@ def get_sum_zero_pairs(numbers):
 
     # add each pair of numbers to dict w/ k=pair and v=sum of items in pair
     # need key to be tuple first since list immutable -- != a key
-    for first_number_pair in numbers:
-        for second_number_pair in range(first_number_pair + 1, len(numbers)):
-            pair_sum_dict[(first_number_pair, second_number_pair)] = first_number_pair + second_number_pair
+    for first_number_index in range(len(numbers)):
+        first_number = numbers[first_number_index]
+        if first_number == 0:  # exception of single zero can pair w/ itself
+            second_number = 0
+            pair_sum_dict[(first_number, second_number)] = 0
+        for second_number_index in range(first_number_index + 1, len(numbers)):
+            second_number = numbers[second_number_index]
+            pair_sum_dict[(first_number, second_number)] = first_number + second_number
 
     # create empty list
     pair_with_sum_0 = []
 
     # create pair, sum for loop; if sum==0, append pair to empty list
-    for pair, pair_sum in pair_sum_dict:
+    for pair, pair_sum in pair_sum_dict.items():
         if pair_sum == 0:
-            pair = list(pair)
+            pair = list(sorted(pair))
             pair_with_sum_0.append(pair)
 
     return pair_with_sum_0
