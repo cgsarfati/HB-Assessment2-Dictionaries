@@ -98,7 +98,29 @@ def get_sum_zero_pairs(numbers):
         [[-1, 1], [0, 0]]
     """
 
-    return []
+    # create empty dict
+    pair_sum_dict = {}
+
+    # convert list to set to remove duplicates
+    numbers = list(set(numbers))
+
+    # add each pair of numbers to dict w/ k=pair and v=sum of items in pair
+    # need key to be tuple first since list immutable -- != a key
+    for first_number_pair in numbers:
+        for second_number_pair in range(first_number_pair + 1, len(numbers)):
+            pair_sum_dict[(first_number_pair, second_number_pair)] = first_number_pair + second_number_pair
+
+    # create empty list
+    pair_with_sum_0 = []
+
+    # create pair, sum for loop; if sum==0, append pair to empty list
+    for pair, pair_sum in pair_sum_dict:
+        if pair_sum == 0:
+            pair = list(pair)
+            pair_with_sum_0.append(pair)
+
+    return pair_with_sum_0
+    # return list
 
 
 def top_chars(phrase):
